@@ -4,13 +4,10 @@ import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
 import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
-import com.google.api.client.http.javanet.NetHttpTransport;
-import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.sheets.v4.Sheets;
 import com.google.api.services.sheets.v4.SheetsScopes;
-import com.google.api.services.sheets.v4.model.ValueRange;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -47,19 +44,14 @@ public class SheetsIntegration {
         Credential credential = new AuthorizationCodeInstalledApp(
                 flow, new LocalServerReceiver())
                 .authorize("user");
-
         return credential;
-
     }
 
-public static Sheets getSheetsService() throws IOException, GeneralSecurityException {
-    Credential credential = authorize();
-    return new Sheets.Builder(GoogleNetHttpTransport.newTrustedTransport(),
-            JacksonFactory.getDefaultInstance(), credential)
-            .setApplicationName(APPLICATION_NAME)
-            .build();
-
-}
-
-
+    public static Sheets getSheetsService() throws IOException, GeneralSecurityException {
+        Credential credential = authorize();
+        return new Sheets.Builder(GoogleNetHttpTransport.newTrustedTransport(),
+                JacksonFactory.getDefaultInstance(), credential)
+                .setApplicationName(APPLICATION_NAME)
+                .build();
+    }
 }

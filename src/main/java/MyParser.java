@@ -1,5 +1,4 @@
 
-import com.fasterxml.jackson.core.JsonToken;
 import com.google.api.services.sheets.v4.model.AppendValuesResponse;
 import com.google.api.services.sheets.v4.model.ValueRange;
 import org.jsoup.Jsoup;
@@ -9,9 +8,7 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
