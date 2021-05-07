@@ -27,12 +27,23 @@ public class SheetsIntegration {
     }
 
     private static Credential authorize() throws IOException, GeneralSecurityException {
+        System.out.println("Начало авторизации");
+
+//        https://stackoverflow.com/questions/32476746/com-google-api-client-googleapis-json-googlejsonresponseexception-403-forbidden
+//        final List<String> SCOPES =
+//                Arrays.asList(SheetsScopes.SPREADSHEETS,SheetsScopes.DRIVE);
+//        System.out.println(SCOPES);
+//
+//         final java.io.File DATA_STORE_DIR = new java.io.File(
+//                System.getProperty("user.home"), ".credentials/2/sheets.googleapis.com-java-quickstart.json");
+//        System.out.println(DATA_STORE_DIR);
+
 
         InputStream in = SheetsIntegration.class.getResourceAsStream("/credentials.json");
         GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(
                 JacksonFactory.getDefaultInstance(), new InputStreamReader(in)
         );
-
+        System.out.println("Получение данных");
         List<String> scopes = Arrays.asList(SheetsScopes.SPREADSHEETS);
 
         GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
@@ -44,6 +55,7 @@ public class SheetsIntegration {
         Credential credential = new AuthorizationCodeInstalledApp(
                 flow, new LocalServerReceiver())
                 .authorize("user");
+        System.out.println("Конец авторизации");
         return credential;
     }
 

@@ -6,7 +6,9 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.awt.*;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.security.GeneralSecurityException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -15,13 +17,53 @@ import java.util.Arrays;
 import java.util.List;
 
 public class MyParser {
-    public static void main(String[] args) throws IOException, GeneralSecurityException {
+
+    private static int number_new_tender = 0;
+
+
+
+
+    public static void main(String[] args) throws IOException, GeneralSecurityException, AWTException {
+
+
 
         List<Article> articles = getArticleList();
+        System.out.println("********************************************");
+        System.out.println(articles);
+        System.out.println("********************************************");
         articles = extracted(articles);
         addInSheet(articles);
 
+        if (SystemTray.isSupported()) {
+            MyParser td = new MyParser();
+            td.displayTray();
+        } else {
+            System.err.println("System tray not supported!");
+        }
+
+
     }
+
+    private void displayTray() throws AWTException, MalformedURLException {
+        //Obtain only one instance of the SystemTray object
+        SystemTray tray = SystemTray.getSystemTray();
+
+        //If the icon is a file
+        Image image = Toolkit.getDefaultToolkit().createImage("icon.png");
+        //Alternative (if the icon is on the classpath):
+        //Image image = Toolkit.getDefaultToolkit().createImage(getClass().getResource("icon.png"));
+
+        TrayIcon trayIcon = new TrayIcon(image, "Tray Demo");
+        //Let the system resize the image if needed
+        trayIcon.setImageAutoSize(true);
+        //Set tooltip text for the tray icon
+        trayIcon.setToolTip("ТЭК ТОРГ");
+        tray.add(trayIcon);
+        trayIcon.displayMessage("РОСНЕФТЬ обновлен", "без ошибок, новых лотов =  " +  number_new_tender, TrayIcon.MessageType.INFO);
+        tray.remove(trayIcon);
+
+    }
+
 
     private static void addInSheet(List<Article> articles) throws IOException, GeneralSecurityException {
 
@@ -76,6 +118,7 @@ public class MyParser {
                     if (!numberOfTendersSheets.contains(articles.get(i).number)) {
                         newarticles.add(articles.get(i));
                     }
+                     number_new_tender = newarticles.size();
                 }
             }
         }
@@ -88,6 +131,7 @@ public class MyParser {
         System.out.println(date);
         String urlRosneft =
                 "https://www.tektorg.ru/rosneft/procedures?q=%D0%BA%D0%B0%D0%B1%D0%B5%D0%BB&defrom=" + date + "&lang=ru&sort=relevance&order=desc&limit=500";
+
         List<Article> articles = new ArrayList<>();
 
         Document document = Jsoup.connect(urlRosneft).get();

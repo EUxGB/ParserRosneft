@@ -1,0 +1,11 @@
+
+"token_uri": "https://oauth2.googleapis.com/token"
+
+https://www.googleapis.com/oauth2/v4/token
+
+ Article{number='РН10500460',
+ name='Выполнение строительно-монтажных работ по проекту: Замена кабельных линий 6 кВ со строительством участков кабельных эстакад на ПАО "Саратовский НПЗ".',
+ client='ПАО "САРАТОВСКИЙ НПЗ"', okved='Строительство жилых и нежилых зданий',
+ dataStart='05.05.2021 17:17',
+ dataEnd='27.05.2021 22:59',
+ myUrl='www.tektorg.ru/rosneft/procedures/706404?lang=ru'}
